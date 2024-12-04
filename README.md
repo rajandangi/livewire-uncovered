@@ -12,6 +12,9 @@ This repository uncovers the magic behind Livewire by building a simplified veri
 
 This will arm you with the knowledge of how Livewire works under the hood and how to build, test and deploy your Livewire apps in daily life.
 
+## Resources
+- [ Inline Component](https://laravel-livewire.com/docs/2.x/making-components#inline-components)
+
 ## License
 
 The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
