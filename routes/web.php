@@ -16,6 +16,10 @@ use Illuminate\Support\Facades\Route;
 
 Route::view('/', 'welcome');
 
+Route::post('livewire', function () {
+    return request('callMethod');
+});
+
 // Custom blade directive
 Blade::directive('livewire', function ($expression) {
     return "<?php echo (new App\Livewire)->initialRender({$expression}); ?>";

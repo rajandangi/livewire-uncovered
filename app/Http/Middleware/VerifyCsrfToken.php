@@ -8,10 +8,10 @@ class VerifyCsrfToken extends Middleware
 {
     /**
      * The URIs that should be excluded from CSRF verification.
-     *
+     * @TODO: This is a security risk. You should not exclude any URIs from CSRF verification.
      * @var array<int, string>
      */
     protected $except = [
-        //
+        'livewire',
     ];
 }
