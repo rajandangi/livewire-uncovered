@@ -13,7 +13,13 @@
 
     @livewire(App\Http\Livewire\Counter::class)
 
-    {{-- @livewireScripts() --}}
+    <script>
+        // find all elements with wire:snapshot attribute
+        document.querySelectorAll('[wire\\:snapshot]').forEach(el => {
+            let snapshot = JSON.parse(el.getAttribute('wire:snapshot'));
+            console.log(snapshot)
+        });
+    </script>
 </body>
 
 </html>
