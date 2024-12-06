@@ -1,5 +1,6 @@
 <?php
 
+use Illuminate\Support\Facades\Blade;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -13,6 +14,9 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
+Route::view('/', 'welcome');
+
+// Custom blade directive
+Blade::directive('livewire', function ($expression) {
+    return "<?php echo (new App\Livewire)->initialRender({$expression}); ?>";
 });

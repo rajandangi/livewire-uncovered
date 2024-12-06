@@ -11,33 +11,9 @@
 <body>
     {{-- <livewire:counter /> --}}
 
-    {!! livewire(App\Http\Livewire\Counter::class) !!}
-
+    @livewire(App\Http\Livewire\Counter::class)
 
     {{-- @livewireScripts() --}}
 </body>
 
 </html>
-
-<?php
-function livewire($class)
-{
-    $component = new $class();
-
-    return Blade::render($component->render(), getProperties($component));
-}
-
-function getProperties($component)
-{
-    $properties = [];
-
-    $reflectedProperties = (new ReflectionClass($component))->getProperties(ReflectionProperty::IS_PUBLIC);
-
-    foreach ($reflectedProperties as $property) {
-        $properties[$property->getName()] = $property->getValue($component);
-    }
-
-    dd($properties);
-    
-    return $properties;
-}
