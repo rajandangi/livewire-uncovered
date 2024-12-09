@@ -26,6 +26,10 @@ Route::post('livewire', function () {
         (new Livewire)->callMethod($component, $method);
     }
 
+    if ([$property, $value] = request('updateProperty')) {
+        (new Livewire)->updateProperty($component, $property, $value);
+    }
+
     [$html, $snapshot] = (new Livewire)->toSnapshot($component);
 
     // Turn the component back into snapshot and get the HTML
