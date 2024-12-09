@@ -45,7 +45,15 @@ class Livewire
             'meta' => $meta,
         ];
 
+        $snapshot = $this->generateChecksum($snapshot);
+
         return [$html, $snapshot];
+    }
+
+    function generateChecksum($snapshot)
+    {
+        $snapshot['checksum'] = md5(json_encode($snapshot));
+        return $snapshot;
     }
 
     // creates meta data about the properties
@@ -67,6 +75,13 @@ class Livewire
     // This method truns a snapshot for a javascript
     function fromSnapshot($snapshot)
     {
+        $checksum = $snapshot['checksum'];
+        unset($snapshot['checksum']);
+
+        if($checksum !== md5(json_encode($snapshot))) {
+            throw new \Exception('Snapshot checksum failed');
+        }
+
         $class = $snapshot['class'];
         $data = $snapshot['data'];
         $meta = $snapshot['meta'];
