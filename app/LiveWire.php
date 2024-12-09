@@ -2,6 +2,7 @@
 
 namespace App;
 
+use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Blade;
 use ReflectionClass;
 use ReflectionProperty;
@@ -28,17 +29,7 @@ class Livewire
             HTML;
     }
 
-    function fromSnapshot($snapshot)
-    {
-        $class = $snapshot['class'];
-        $data = $snapshot['data'];
-
-        $component = new $class();
-        $this->setProperties($component, $data);
-
-        return $component;
-    }
-
+    // This is the method turns a component into a snapshot
     function toSnapshot($component)
     {
         $html = Blade::render(
@@ -46,12 +37,59 @@ class Livewire
             $properties = $this->getProperties($component)
         );
 
+        [$data, $meta] = $this->dehydrateProperties($properties);
+
         $snapshot = [
             'class' => get_class($component),
-            'data' => $properties,
+            'data' => $data,
+            'meta' => $meta,
         ];
 
         return [$html, $snapshot];
+    }
+
+    // creates meta data about the properties
+    function dehydrateProperties($properties)
+    {
+        $data = $meta = [];
+
+        foreach ($properties as $key => $value) {
+            if ($value instanceof Collection) {
+                $value = $value->toArray();
+                $meta[$key] = 'collection';
+            }
+            $data[$key] = $value;
+        }
+
+        return [$data, $meta];
+    }
+
+    // This method truns a snapshot for a javascript
+    function fromSnapshot($snapshot)
+    {
+        $class = $snapshot['class'];
+        $data = $snapshot['data'];
+        $meta = $snapshot['meta'];
+
+        $component = new $class();
+
+        $properties = $this->hydrateProperties($data, $meta);
+
+        $this->setProperties($component, $properties);
+
+        return $component;
+    }
+
+    function hydrateProperties($data, $meta)
+    {
+        $properties = [];
+        foreach ($data as $key => $value) {
+            if (isset($meta[$key]) && $meta[$key] === 'collection') {
+                $value = collect($value);
+            }
+            $properties[$key] = $value;
+        }
+        return $properties;
     }
 
     function setProperties($component, $data)

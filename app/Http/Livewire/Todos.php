@@ -5,22 +5,24 @@ namespace App\Http\Livewire;
 class Todos
 {
     public $draft = '';
-    public $todos = [];
+    public $todos;
 
     // This is called when the component is first initialized
     public function mount()
     {
-        $this->todos = ['One Todo', 'Another Todo'];
+        // Wrap up PHP array in a Laravel collection and gives a lot of useful methods
+        $this->todos = collect(['One Todo', 'Another Todo']);
     }
 
     // This is called when the draft property is updated
-    public function updatedDraft(){
+    public function updatedDraft()
+    {
         $this->draft = strtoupper($this->draft);
     }
 
     public function addTodo()
     {
-        $this->todos[] = $this->draft;
+        $this->todos->push($this->draft);
 
         $this->draft = '';
     }
