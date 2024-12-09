@@ -40,6 +40,8 @@ Route::post('livewire', function () {
 });
 
 // Custom blade directive
+/*
 Blade::directive('livewire', function ($expression) {
     return "<?php echo (new App\Livewire)->initialRender({$expression}); ?>";
 });
+*/

@@ -2,7 +2,9 @@
 
 namespace App\Http\Livewire;
 
-class Todos
+use Livewire\Component;
+
+class Todos extends Component
 {
     public $draft = '';
     public $todos;

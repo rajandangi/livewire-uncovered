@@ -18,7 +18,7 @@
     {{-- @livewire(App\Http\Livewire\Counter::class) --}}
     @livewire(App\Http\Livewire\Todos::class)
 
-    <script src="livewire.js"></script>
+    @livewireScripts
 </body>
 
 </html>
