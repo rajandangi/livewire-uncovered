@@ -16,7 +16,7 @@ class Counter extends Component
     public function render()
     {
         return <<<'blade'
-            <div>
+            <div class="counter">
                 <span>{{$count}}</span>
 
                 <button wire:click="increment">+</button>

@@ -34,6 +34,7 @@ function sendRequest(el, addToPayload) {
             let { html, snapshot } = response;
 
             el.__livewire = snapshot;
-            el.innerHTML = html;
+            // el.innerHTML = html;
+            Alpine.morph(el.firstElementChild, html);
         })
 }
